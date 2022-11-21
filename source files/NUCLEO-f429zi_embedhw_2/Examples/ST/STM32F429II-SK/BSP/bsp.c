@@ -50,6 +50,8 @@
 #define BSP_GPIOB_LED2	DEF_BIT_07
 #define BSP_GPIOB_LED3	DEF_BIT_14
 
+#define BSP_USART1
+
 /*
 *********************************************************************************************************
 *                                           LOCAL CONSTANTS
@@ -221,6 +223,7 @@
 */
 
 static  void  BSP_LED_Init  (void);
+static void USART_Config(void);
 
 
 /*
@@ -349,6 +352,7 @@ void  BSP_Init (void)
     }
 
     BSP_LED_Init();                                             /* Initialize user LEDs                                 */
+    USART_Config();
 
 #ifdef TRACE_EN                                                 /* See project / compiler preprocessor options.         */
     BSP_CPU_REG_DBGMCU_CR |=  BSP_DBGMCU_CR_TRACE_IOEN_MASK;    /* Enable tracing (see Note #2).                        */
@@ -427,11 +431,9 @@ void  BSP_Tick_Init (void)
 *
 * Argument(s) : led     The ID of the LED to control:
 *
-*                       0    initialize ALL  LEDs
-*                       1    initialize user LED1
-*                       2    initialize user LED2
-*                       3    initialize user LED3
-*                       4    initialize user LED4
+*              LED1 PB0
+*              LED2 PB7
+*              LED3 PB14
 *
 * Return(s)   : none.
 *
@@ -443,31 +445,18 @@ void  BSP_Tick_Init (void)
 
 static void  BSP_LED_Init()
 {
-    GPIO_InitTypeDef  gpio_init;
+	   GPIO_InitTypeDef led_init = {0};
 
-	BSP_PeriphEn(BSP_PERIPH_ID_GPIOB);
+	   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	   RCC_AHB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
-//	gpio_init.GPIO_Pin   = BSP_GPIOB_LED1;
-//	gpio_init.GPIO_Mode = GPIO_Mode_OUT;
-//	gpio_init.GPIO_OType = GPIO_OType_PP;
-//	gpio_init.GPIO_Speed = GPIO_Speed_2MHz;
-//	gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-//	GPIO_Init(GPIOB, &gpio_init);
+	   led_init.GPIO_Mode   = GPIO_Mode_OUT;
+	   led_init.GPIO_OType  = GPIO_OType_PP;
+	   led_init.GPIO_Speed  = GPIO_Speed_2MHz;
+	   led_init.GPIO_PuPd   = GPIO_PuPd_NOPULL;
+	   led_init.GPIO_Pin    = GPIO_Pin_0 | GPIO_Pin_7 | GPIO_Pin_14;
 
-	gpio_init.GPIO_Pin   = BSP_GPIOB_LED2;
-	gpio_init.GPIO_Mode = GPIO_Mode_OUT;
-	gpio_init.GPIO_OType = GPIO_OType_PP;
-	gpio_init.GPIO_Speed = GPIO_Speed_2MHz;
-	gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOB, &gpio_init);
-
-//	gpio_init.GPIO_Pin   = BSP_GPIOB_LED3;
-//	gpio_init.GPIO_Mode = GPIO_Mode_OUT;
-//	gpio_init.GPIO_OType = GPIO_OType_PP;
-//	gpio_init.GPIO_Speed = GPIO_Speed_2MHz;
-//	gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-//	GPIO_Init(GPIOB, &gpio_init);
-
+	   GPIO_Init(GPIOB, &led_init);
 }
 
 
@@ -557,18 +546,15 @@ void  BSP_LED_On (CPU_INT08U led)
 
         case 1u:
              GPIO_SetBits(GPIOB, BSP_GPIOB_LED1);
-        	 //GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_SET);
              break;
 
 
         case 2u:
-        	 //GPIO_SetBits(GPIOB, GPIO_Pin_7, Bit_SET);
         	GPIO_SetBits(GPIOB, BSP_GPIOB_LED2);
              break;
 
 
         case 3u:
-        	//GPIO_WriteBit(GPIOB, GPIO_Pin_14, Bit_SET);
         	 GPIO_SetBits(GPIOB, BSP_GPIOB_LED3);
              break;
 
@@ -655,6 +641,7 @@ void  BSP_LED_Toggle (CPU_INT08U  led)
              break;
     }
 }
+
 
 /*$PAGE*/
 /*
@@ -907,3 +894,92 @@ CPU_INT64U  CPU_TS64_to_uSec (CPU_TS64  ts_cnts)
     return (ts_us);
 }
 #endif
+
+USART_TypeDef* COM_USART[COMn] = {Nucleo_COM1};
+GPIO_TypeDef* COM_TX_PORT[COMn] = {Nucleo_COM1_TX_GPIO_PORT};
+GPIO_TypeDef* COM_RX_PORT[COMn] = {Nucleo_COM1_RX_GPIO_PORT};
+const uint32_t COM_USART_CLK[COMn] = {Nucleo_COM1_CLK};
+const uint32_t COM_TX_PORT_CLK[COMn] = {Nucleo_COM1_TX_GPIO_CLK};
+const uint32_t COM_RX_PORT_CLK[COMn] = {Nucleo_COM1_RX_GPIO_CLK};
+const uint16_t COM_TX_PIN[COMn] = {Nucleo_COM1_TX_PIN};
+const uint16_t COM_RX_PIN[COMn] = {Nucleo_COM1_RX_PIN};
+const uint16_t COM_TX_PIN_SOURCE[COMn] = {Nucleo_COM1_TX_SOURCE};
+const uint16_t COM_RX_PIN_SOURCE[COMn] = {Nucleo_COM1_RX_SOURCE};
+const uint16_t COM_TX_AF[COMn] = {Nucleo_COM1_TX_AF};
+const uint16_t COM_RX_AF[COMn] = {Nucleo_COM1_RX_AF};
+
+
+void STM_Nucleo_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Enable GPIO clock */
+  RCC_AHB1PeriphClockCmd(COM_TX_PORT_CLK[COM] | COM_RX_PORT_CLK[COM], ENABLE);
+
+  if (COM == COM1)
+  {
+    /* Enable UART clock */
+    RCC_APB1PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
+  }
+
+  /* Connect PXx to USARTx_Tx*/
+  GPIO_PinAFConfig(COM_TX_PORT[COM], COM_TX_PIN_SOURCE[COM], COM_TX_AF[COM]);
+
+  /* Connect PXx to USARTx_Rx*/
+  GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
+
+  /* Configure USART Tx as alternate function  */
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+
+  GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStructure);
+
+  /* Configure USART Rx as alternate function  */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
+  GPIO_Init(COM_RX_PORT[COM], &GPIO_InitStructure);
+
+  /* USART configuration */
+  USART_Init(COM_USART[COM], USART_InitStruct);
+
+  /* Enable USART */
+  USART_Cmd(COM_USART[COM], ENABLE);
+}
+
+
+
+
+static void USART_Config(void)
+{
+  USART_InitTypeDef USART_InitStructure;
+
+  /* USARTx configured as follows:
+        - BaudRate = 115200 baud
+        - Word Length = 8 Bits
+        - One Stop Bit
+        - No parity
+        - Hardware flow control disabled (RTS and CTS signals)
+        - Receive and transmit enabled
+  */
+  USART_InitStructure.USART_BaudRate = 115200;
+  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+  USART_InitStructure.USART_StopBits = USART_StopBits_1;
+  USART_InitStructure.USART_Parity = USART_Parity_No;
+  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+
+  STM_Nucleo_COMInit(COM1, &USART_InitStructure);
+}
+
+void send_string(const char *str)
+{
+    while (*str)
+    {
+        while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_TXE) == RESET);
+        USART_SendData(Nucleo_COM1, *str++);
+    }
+}
+

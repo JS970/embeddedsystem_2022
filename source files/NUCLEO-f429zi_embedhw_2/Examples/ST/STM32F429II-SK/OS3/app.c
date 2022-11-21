@@ -38,13 +38,15 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx.h"
+#include "bsp.h"
+#include "cpu.h"
 /*
 *********************************************************************************************************
 *                                            LOCAL DEFINES
 *********************************************************************************************************
 */
 
-#define  APP_TASK_EQ_0_ITERATION_NBR              16u
+#define APP_TASK_EQ_0_ITERATION_NBR              16u
 #define BSP_GPIOB_LED1	DEF_BIT_00
 #define BSP_GPIOB_LED2	DEF_BIT_07
 #define BSP_GPIOB_LED3	DEF_BIT_14
@@ -54,9 +56,12 @@
 *********************************************************************************************************
 */
 typedef enum {
-   TASK_500MS,
-   TASK_1000MS,
-   TASK_2000MS,
+   LED1,
+   LED2,
+   LED3,
+   USART,
+   ECHO,
+   CMD_READ,
 
    TASK_N
 }task_e;
@@ -81,22 +86,24 @@ static  void  AppObjCreate          (void);
 static void AppTask_led1blink(void *p_arg);
 static void AppTask_led2blink(void *p_arg);
 static void AppTask_led3blink(void *p_arg);
+static void AppTask_USART(void *p_arg);
+static void AppTask_CMD(void *p_arg);
 
 /***********************************/
 /**********declared for HW2*********/
 // led on/off functions
-static void led_on();
-static void led_off();
+static void led_on(int led_num);
+static void led_off(int led_num);
 
 // setting global variables for configure blink task
 // blinking terms of each led units
 static int led1_blink_term = 1;
-static int led2_blink_term = 1;
-static int led3_blink_term = 1;
+static int led2_blink_term = 2;
+static int led3_blink_term = 4;
 // 0 : not blinking, 1 : blinking
 static int led1_blink = 1;
 static int led2_blink = 1;
-static int led3_blink = 1;
+static int led3_blink = 0;
 // blinking configure functions
 static void configure_led1_blink(int tf); // parameter tf(true false) : 1: true, 2 : false
 static void configure_led2_blink(int tf);
@@ -105,11 +112,10 @@ static void configure_led3_blink(int tf);
 static void configure_led1_blink_term(int bt); // parameter bt(blink time) -> set to blinking term variavle
 static void configure_led2_blink_term(int bt);
 static void configure_led3_blink_term(int bt);
+// Commands
+static char CMD[15] = {0,};
 /***********************************/
-
-static void Setup_Gpio(void);
-
-
+static void Setup_Led(void);
 /*
 *********************************************************************************************************
 *                                       LOCAL GLOBAL VARIABLES
@@ -122,15 +128,21 @@ static  CPU_STK  AppTaskStartStk[APP_CFG_TASK_START_STK_SIZE];
 static  OS_TCB       AppTask_led1blink_TCB;
 static  OS_TCB       AppTask_led2blink_TCB;
 static  OS_TCB       AppTask_led3blink_TCB;
+static  OS_TCB		 AppTask_USART_TCB;
+static  OS_TCB		 AppTask_CMD_TCB;
 
 static  CPU_STK  AppTask_led1blink_Stack[APP_CFG_TASK_START_STK_SIZE];
 static  CPU_STK  AppTask_led2blink_Stack[APP_CFG_TASK_START_STK_SIZE];
 static  CPU_STK  AppTask_led3blink_Stack[APP_CFG_TASK_START_STK_SIZE];
-int count=0;
+static  CPU_STK  AppTask_USART_Stack[APP_CFG_TASK_START_STK_SIZE];
+static  CPU_STK  AppTask_CMD_Stack[APP_CFG_TASK_START_STK_SIZE];
+
 task_t cyclic_tasks[TASK_N] = {
-   {"AppTask_led1blink", AppTask_led1blink, 0, &AppTask_led1blink_Stack[0], &AppTask_led1blink_TCB},
-   {"AppTask_led2blink", AppTask_led2blink, 0, &AppTask_led2blink_Stack[0], &AppTask_led2blink_TCB},
-   {"AppTask_led3blink", AppTask_led3blink, 0, &AppTask_led3blink_Stack[0], &AppTask_led3blink_TCB},
+   {"AppTask_led1blink", AppTask_led1blink, 3, &AppTask_led1blink_Stack[0], &AppTask_led1blink_TCB},
+   {"AppTask_led2blink", AppTask_led2blink, 3, &AppTask_led2blink_Stack[0], &AppTask_led2blink_TCB},
+   {"AppTask_led3blink", AppTask_led3blink, 3, &AppTask_led3blink_Stack[0], &AppTask_led3blink_TCB},
+   {"AppTask_USART"    , AppTask_USART    , 2, &AppTask_USART_Stack[0]    , &AppTask_USART_TCB    },
+   {"AppTask_CMD" 	   , AppTask_CMD 	  , 2, &AppTask_CMD_Stack[0]	  , &AppTask_CMD_TCB	  }
 };
 /* ------------ FLOATING POINT TEST TASK -------------- */
 /*
@@ -149,18 +161,17 @@ task_t cyclic_tasks[TASK_N] = {
 int main(void)
 {
     OS_ERR  err;
-
     /* Basic Init */
     RCC_DeInit();
 //    SystemCoreClockUpdate();
-    Setup_Gpio();
 
-    /* BSP Init */
-    BSP_IntDisAll();                                            /* Disable all interrupts.                              */
-
+    Setup_Led();
+    BSP_Init();
+    // BSP_IntDisAll();                                            /* Disable all interrupts.                              */
     CPU_Init();                                                 /* Initialize the uC/CPU Services                       */
     Mem_Init();                                                 /* Initialize Memory Management Module                  */
-    Math_Init();                                                /* Initialize Mathematical Module                       */
+    Math_Init();                                              /* Initialize Mathematical Module                       */
+
 
 
     /* OS Init */
@@ -227,7 +238,7 @@ static  void  AppTaskStart (void *p_arg)
    APP_TRACE_DBG(("LED ON/OFF test\n\r"));
    led_on(1);
    led_on(2);
-   led_on(3);
+   led_off(3);
    AppTaskCreate(p_arg);
 }
 
@@ -246,21 +257,19 @@ static  void  AppTaskStart (void *p_arg)
 */
 static void AppTask_led1blink(void *p_arg)
 {
-	/*ledparam : XY => X : for led number, Y : for time unit*/
     OS_ERR  err;
-    BSP_LED_On(1);
+    //BSP_LED_On(1);
 
-    if(led1_blink)
-    {
-        while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
-            BSP_LED_Toggle(1);
+	while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
+		if(led1_blink)
+		{
+			BSP_LED_Toggle(1);
+		}
+		OSTimeDlyHMSM(0u, 0u, led1_blink_term, 0u,
+					  OS_OPT_TIME_HMSM_STRICT,
+					  &err);
+	}
 
-            OSTimeDlyHMSM(0u, 0u, led1_blink_term, 0u,
-                          OS_OPT_TIME_HMSM_STRICT,
-                          &err);
-
-        }
-    }
 }
 
 /*
@@ -280,19 +289,17 @@ static void AppTask_led2blink(void *p_arg)
 {
 	/*ledparam : XY => X : for led number, Y : for time unit*/
     OS_ERR  err;
-    BSP_LED_On(2);
+    //BSP_LED_On(2);
 
-    if(led2_blink)
-    {
-        while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
-            BSP_LED_Toggle(2);
-
-            OSTimeDlyHMSM(0u, 0u, led2_blink_term, 0u,
-                          OS_OPT_TIME_HMSM_STRICT,
-                          &err);
-
-        }
-    }
+	while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
+		if(led2_blink)
+		{
+			BSP_LED_Toggle(2);
+		}
+		OSTimeDlyHMSM(0u, 0u, led2_blink_term, 0u,
+					  OS_OPT_TIME_HMSM_STRICT,
+					  &err);
+	}
 }
 
 /*
@@ -312,19 +319,136 @@ static void AppTask_led3blink(void *p_arg)
 {
 	/*ledparam : XY => X : for led number, Y : for time unit*/
     OS_ERR  err;
-    BSP_LED_On(3);
+    //BSP_LED_On(3);
 
-    if(led3_blink)
-    {
-        while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
-            BSP_LED_Toggle(3);
+	while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
+		if(led3_blink)
+		{
+			BSP_LED_Toggle(3);
+		}
 
-            OSTimeDlyHMSM(0u, 0u, led3_blink_term, 0u,
-                          OS_OPT_TIME_HMSM_STRICT,
-                          &err);
+		OSTimeDlyHMSM(0u, 0u, led3_blink_term, 0u,
+					  OS_OPT_TIME_HMSM_STRICT,
+					  &err);
+	}
 
-        }
-    }
+}
+
+static void AppTask_USART(void *p_arg)
+{
+	OS_ERR err;
+	send_string("USART Listening\n");
+	uint16_t c0 = 0, c1 = 0;
+	uint16_t word;
+	// char word[15] = {0, };
+	int idx = 0;
+
+	while(DEF_TRUE)
+	{
+		c0 = USART_ReceiveData(USART3);
+		if (c1 != c0)
+		{
+			CMD[idx++] = c0;
+			if(c0 == 'f')
+				send_string("ff");
+			else if(c0 != '`')
+				USART_SendData(USART3, c0);
+			c1 = c0;
+
+			if (c0 == '`')
+			{
+				c0 = 0;
+				c1 = 0;
+				idx = 0;
+				for(int i = 0; i < 15; i++)
+					CMD[i] = 0;
+			}
+		}
+
+        // send_string(CMD);
+        OSTimeDlyHMSM(0u, 0u, 0u, 1u,
+                      OS_OPT_TIME_HMSM_STRICT,
+                      &err);
+	}
+}
+
+static void AppTask_CMD(void *p_arg)
+{
+	OS_ERR err;
+	while(DEF_TRUE)
+	{
+		if(CMD[0] == 'l' && CMD[1] == 'e' && CMD[2] == 'd')
+		{
+			if(CMD[3] == '1')
+			{
+				if(CMD[4] == 'o' && CMD[5] == 'n')
+				{
+					configure_led1_blink(0);
+					led_on(1);
+				}
+				if(CMD[4] == 'o' && CMD[5] == 'f')
+				{
+					configure_led1_blink(0);
+					led_off(1);
+				}
+				if(CMD[4] == 'b' && CMD[5] == 'l' && CMD[6] == 'i' && CMD[7] == 'n' && CMD[8] == 'k')
+				{
+					configure_led1_blink(1);
+					int bt = CMD[9] - '0';
+					configure_led1_blink_term(bt);
+				}
+
+			}
+			else if(CMD[3] == '2')
+			{
+				if(CMD[4] == 'o' && CMD[5] == 'n')
+				{
+					configure_led2_blink(0);
+					led_on(2);
+				}
+				if(CMD[4] == 'o' && CMD[5] == 'f')
+				{
+					configure_led2_blink(0);
+					led_off(2);
+				}
+				if(CMD[4] == 'b' && CMD[5] == 'l' && CMD[6] == 'i' && CMD[7] == 'n' && CMD[8] == 'k')
+				{
+					configure_led2_blink(1);
+					int bt = CMD[9] - '0';
+					configure_led2_blink_term(bt);
+				}
+			}
+			else if(CMD[3] == '3')
+			{
+				if(CMD[4] == 'o' && CMD[5] == 'n')
+				{
+					configure_led3_blink(0);
+					led_on(3);
+				}
+				if(CMD[4] == 'o' && CMD[5] == 'f')
+				{
+					configure_led3_blink(0);
+					led_off(3);
+				}
+				if(CMD[4] == 'b' && CMD[5] == 'l' && CMD[6] == 'i' && CMD[7] == 'n' && CMD[8] == 'k')
+				{
+					configure_led3_blink(1);
+					int bt = CMD[9] - '0';
+					configure_led3_blink_term(bt);
+				}
+			}
+
+		}
+		else if(CMD[0] == 'r' && CMD[1] == 'e' && CMD[2] == 's' && CMD[3] == 'e' && CMD[4] == 't')
+		{
+			led_off(1);
+			led_off(2);
+			led_off(3);
+		}
+        OSTimeDlyHMSM(0u, 0u, 0u, 1u,
+                      OS_OPT_TIME_HMSM_STRICT,
+                      &err);
+	}
 
 }
 /*
@@ -350,7 +474,7 @@ static  void  AppTaskCreate (void *p_arg)
    task_t* pTask_Cfg;
    for(idx = 0; idx < TASK_N; idx++)
    {
-	   pTask_Cfg = &cyclic_tasks[idx]; // don't change... blink task was implemented by 1000ms unit
+	   pTask_Cfg = &cyclic_tasks[idx];
 
 	   OSTaskCreate(
 			 pTask_Cfg->pTcb,
@@ -411,10 +535,9 @@ static  void  AppObjCreate (void)
 *
 *********************************************************************************************************
 */
-static void Setup_Gpio(void)
+static void Setup_Led(void)
 {
-   GPIO_InitTypeDef led_init = {0};
-   GPIO_InitTypeDef USART_init = {0};
+   GPIO_InitTypeDef led_init;
 
    /* setup GPIO for LED */
    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
@@ -426,21 +549,6 @@ static void Setup_Gpio(void)
    led_init.GPIO_PuPd   = GPIO_PuPd_NOPULL;
    led_init.GPIO_Pin    = GPIO_Pin_0 | GPIO_Pin_7 | GPIO_Pin_14;
    GPIO_Init(GPIOB, &led_init);
-
-
-   /* setup GPIO for USART3 */
-   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE); // What is difference between USARTx blocks???
-   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE); // PD8 : Tx, PD9 : Rx
-   /* setup Rx, Tx Alternative Function */
-   GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_USART3);
-   GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_USART3);
-   USART_init.GPIO_Mode = GPIO_Mode_AF;
-   USART_init.GPIO_OType = GPIO_OType_PP;
-   USART_init.GPIO_Speed = GPIO_Speed_2MHz;
-   USART_init.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-   USART_init.GPIO_Pin   = GPIO_Pin_8 | GPIO_Pin_9;
-   GPIO_Init(GPIOD, &USART_init);
-
 }
 
 static void led_on(int led_num)
@@ -459,7 +567,6 @@ static void led_on(int led_num)
 	default:
 		break;
 	}
-
 }
 
 static void led_off(int led_num)
@@ -468,12 +575,15 @@ static void led_off(int led_num)
 	{
 	case 1:
 		GPIO_ResetBits(  GPIOB, BSP_GPIOB_LED1);
+		configure_led1_blink(0);
 		break;
 	case 2:
 		GPIO_ResetBits(  GPIOB, BSP_GPIOB_LED2);
+		configure_led2_blink(0);
 		break;
 	case 3:
 		GPIO_ResetBits(  GPIOB, BSP_GPIOB_LED3);
+		configure_led3_blink(0);
 		break;
 	default:
 		break;

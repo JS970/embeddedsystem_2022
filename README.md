@@ -1,9 +1,6 @@
 # Embedded System
 - 2022 PNU embedded system class repository
 - purpose of reserve the assignment codes
-- TrueSTUDIO directory is for TrusSTUDIO workspace files
-- source file directory contains project source codes
-- manuals directory contains manuals about Target board and uOS-III
 ## Environment
 - Windows 10, Windows 11
 - Atollic TrueSTUDIO for STM32 9.3.0
@@ -13,3 +10,7 @@
 - en.stsw-link009
 ## Target Board
 - Nucleo-F429ZI
+## Directories
+- TrueSTUDIO : TrusSTUDIO workspace files
+- source files : project source codes
+- manuals : Target board & uOS-III manuals

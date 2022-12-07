@@ -336,44 +336,31 @@ static void AppTask_led3blink(void *p_arg)
 
 static void AppTask_USART(void *p_arg)
 {
+	send_string("\n\rSystem Start \n\r");
 	OS_ERR err;
-	send_string("USART Listening\n");
-	uint16_t c0 = 0, c1 = 0;
-	uint16_t word;
-	// char word[15] = {0, };
 	int idx = 0;
 
 	while(DEF_TRUE)
 	{
-		c0 = USART_ReceiveData(USART3);
-		if (c1 != c0)
+		idx = 0;
+		while(USART_ReceiveData(Nucleo_COM1) != '`')
 		{
-			CMD[idx++] = c0;
-			if(c0 == 'f')
-				send_string("ff");
-			else if(c0 != '`')
-				USART_SendData(USART3, c0);
-			c1 = c0;
+			while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_RXNE) == RESET) { }
 
-			if (c0 == '`')
-			{
-				c0 = 0;
-				c1 = 0;
-				idx = 0;
-				for(int i = 0; i < 15; i++)
-					CMD[i] = 0;
-			}
+			CMD[idx] = USART_ReceiveData(Nucleo_COM1);
+			USART_SendData(Nucleo_COM1, CMD[idx]);
+			idx++;
 		}
-
-        // send_string(CMD);
         OSTimeDlyHMSM(0u, 0u, 0u, 1u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 	}
+
 }
 
 static void AppTask_CMD(void *p_arg)
 {
+
 	OS_ERR err;
 	while(DEF_TRUE)
 	{

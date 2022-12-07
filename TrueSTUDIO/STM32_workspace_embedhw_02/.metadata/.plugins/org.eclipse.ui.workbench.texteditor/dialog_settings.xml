@@ -9,13 +9,13 @@
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
 			<item value="USART_SendData"/>
+			<item value="USART"/>
+			<item value="USART_Config"/>
 			<item value="NVIC"/>
 			<item value="Hello"/>
-			<item value="USART_Config"/>
 			<item value="send_string"/>
 			<item value="sibal"/>
 			<item value="RCC_CR"/>
-			<item value="RCC_CFGR"/>
 		</list>
 		<list key="replacehistory">
 		</list>

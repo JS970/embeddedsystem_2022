@@ -104,15 +104,6 @@ static int click = 0;
 *********************************************************************************************************
 */
 
-void send_string(const char *str)
-{
-    while (*str)
-    {
-        while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_TXE) == RESET);
-        USART_SendData(Nucleo_COM1, *str++);
-    }
-}
-
 int main(void)
 {
     OS_ERR  err;
@@ -207,13 +198,12 @@ static  void  AppTaskStart (void *p_arg)
 * Note: Long period used to measure timing in person
 *********************************************************************************************************
 */
+static int state = 0;
+static int lednum = 0;
 static void AppTask_1000ms(void *p_arg)
 {
     OS_ERR  err;
-    BSP_LED_On(2);
     int message;
-    int lednum = 0;
-    int state = 0;
 
     while (DEF_TRUE)
     {                                          /* Task body, always written as an infinite loop.       */
@@ -225,45 +215,27 @@ static void AppTask_1000ms(void *p_arg)
 							   (CPU_TS *)0,
 							   (OS_ERR *)&err);
 
-    	if(message == 0)
-    	{
-    		if (state == 0)
-    		{
-				BSP_LED_Off(2);
-				BSP_LED_Off(3);
-				BSP_LED_Toggle(1);
-    		}
-    		else if (state == 1)
-    		{
-            	BSP_LED_Off((lednum+1) % 3 + 1);
-            	BSP_LED_Off((lednum+2) % 3 + 1);
-            	BSP_LED_Toggle(lednum+1);
-    		}
-    		else if (state == 2)
-    		{
 
-        		BSP_LED_Toggle(1);
-        		BSP_LED_Toggle(2);
-            	BSP_LED_Toggle(3);
-    		}
-    	}
+		if (state == 0)
+		{
+			BSP_LED_Off(2);
+			BSP_LED_Off(3);
+			BSP_LED_Toggle(1);
+		}
+		else if (state == 1)
+		{
+			BSP_LED_Off((lednum+1) % 3 + 1);
+			BSP_LED_Off((lednum+2) % 3 + 1);
+			BSP_LED_Toggle(lednum+1);
+		}
+		else if (state == 2)
+		{
 
-    	if(message == 2)
-    	{
-    		lednum++;
-    		lednum %= 3;
-    		state = 1;
-    	}
+			BSP_LED_Toggle(1);
+			BSP_LED_Toggle(2);
+			BSP_LED_Toggle(3);
+		}
 
-    	if(message == 4)
-    	{
-    		state = 2;
-    	}
-
-    	if(message > 4)
-    	{
-    		state = 0;
-    	}
 
     	OSTimeDlyHMSM(0u, 0u, 1u, 0u,
                       OS_OPT_TIME_HMSM_STRICT,
@@ -302,7 +274,7 @@ static void AppTask_ButtonInput(void *p_arg)
     }
 }
 
-int startflag = 1;
+static int startflag = 1;
 static void AppTask_USART(void *p_arg)
 {
 	OS_ERR err;
@@ -326,20 +298,26 @@ static void AppTask_USART(void *p_arg)
     	if(message == 2)
     	{
 
+    		send_string("\n\r button pushed 1 time");
+    		lednum++;
+    		lednum %= 3;
+    		state = 1;
     	}
 
     	if(message == 4)
     	{
-
+    		send_string("\n\r button pushed 2 times");
+    		state = 2;
     	}
 
     	if(message > 4)
     	{
-
+    		send_string("\n\r button pushed 3 times");
+    		state = 0;
     	}
 
 
-		OSTimeDlyHMSM(0u, 0u, 0u, 500u,
+		OSTimeDlyHMSM(0u, 0u, 2u, 0u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 	}
@@ -380,7 +358,7 @@ static void AppTask_CountInit(void *p_arg)
 static  void  AppTaskCreate (void)
 {
 	OS_ERR  err;
-	// Button Count Initialization Task, priority : 4, term : 2 second
+	// Button Count Initialization Task, priority : 6, term : 2 second
 	OSTaskCreate(
 		(OS_TCB       *)&Task_CountInit_TCB,               /*      CountInit task         */
 		(CPU_CHAR     *)"AppTask_Countinit",
@@ -396,13 +374,13 @@ static  void  AppTaskCreate (void)
 		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
 		(OS_ERR       *)&err);
 
-	// LED Task, priority : 5, term : 1 second
+	// LED Task, priority : 8, term : 1 second
 	OSTaskCreate(
 		(OS_TCB       *)&Task_1000ms_TCB,              /*       LED task        */
 		(CPU_CHAR     *)"AppTask_1000ms",
 		(OS_TASK_PTR   )AppTask_1000ms,
 		(void         *)0u,
-		(OS_PRIO       )4, // set priority
+		(OS_PRIO       )8, // set priority
 		(CPU_STK      *)&Task_1000ms_Stack[0u],
 		(CPU_STK_SIZE  )Task_1000ms_Stack[APP_CFG_TASK_START_STK_SIZE / 10u],
 		(CPU_STK_SIZE  )APP_CFG_TASK_START_STK_SIZE,
@@ -412,7 +390,7 @@ static  void  AppTaskCreate (void)
 		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
 		(OS_ERR       *)&err);
 
-	// Button Task, priority 6, term : 50ms
+	// Button Task, priority 5, term : 250ms
 	OSTaskCreate(
 		(OS_TCB       *)&Task_ButtonInput_TCB,         /*    ButtonInput task    */
 		(CPU_CHAR     *)"AppTask_ButtonInput",
@@ -428,6 +406,7 @@ static  void  AppTaskCreate (void)
 		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
 		(OS_ERR       *)&err);
 
+	// USART Task, priority 7, term : 2 second
 	OSTaskCreate(
 		(OS_TCB       *)&Task_USART_TCB,               /*      USART task         */
 		(CPU_CHAR     *)"AppTask_USART",

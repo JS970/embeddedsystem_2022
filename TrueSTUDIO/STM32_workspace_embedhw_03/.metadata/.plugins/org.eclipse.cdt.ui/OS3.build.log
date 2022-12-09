@@ -1,6 +1,15 @@
-14:36:02 **** Incremental Build of configuration Debug for project OS3 ****
+16:04:40 **** Incremental Build of configuration Debug for project OS3 ****
 Info: Internal Builder is used for build
 arm-atollic-eabi-gcc -c ..\..\app.c -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu11 -DSTM32F42_43xxx -DUSE_STDPERIPH_DRIVER -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../ -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../BSP -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../BSP/ST/STM32F4xx/inc -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../BSP/ST/STM32F4xx/src -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../BSP/TrueSTUDIO -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../../../../Software/uC-CPU/ARM-Cortex-M4/GNU -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../../../../Software/uC-CPU -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../../../../Software/uC-LIB -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../../../../Software/uC-LIB/Ports/ARM-Cortex-M4/GNU -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../../../../Software/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU -IC:/Users/Jaesung Son/Documents/GitHub/embeddedsystem_2022/source files/NUCLEO-f429zi_embedhw_3/Examples/ST/STM32F429II-SK/OS3/TrueSTUDIO/../../../../../Software/uCOS-III/Source -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o APP\app.o 
+..\..\app.c: In function 'AppTask_1000ms':
+..\..\app.c:206:9: warning: variable 'message' set but not used [-Wunused-but-set-variable]
+     int message;
+         ^~~~~~~
+..\..\app.c: In function 'AppTask_USART':
+..\..\app.c:287:4: warning: implicit declaration of function 'send_string' [-Wimplicit-function-declaration]
+    send_string("\n\rSystem start \n\r");
+    ^~~~~~~~~~~
+..\..\app.c: At top level:
 ..\..\app.c:68:13: warning: 'AppTask_Countinit' declared 'static' but never defined [-Wunused-function]
  static void AppTask_Countinit(void *p_arg);
              ^~~~~~~~~~~~~~~~~
@@ -9,12 +18,12 @@ C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.3.0\ide\jre\bin\java -jar 
 Generate build reports...
 Print size information
    text	   data	    bss	    dec	    hex	filename
-  25240	     28	  13372	  38640	   96f0	OS3.elf
+  26168	     40	  13380	  39588	   9aa4	OS3.elf
 Print size information done
 Generate listing file
 Output sent to: OS3.list
 Generate listing file done
 Generate build reports done
 
-14:36:02 Build Finished (took 710ms)
+16:04:40 Build Finished (took 714ms)
 

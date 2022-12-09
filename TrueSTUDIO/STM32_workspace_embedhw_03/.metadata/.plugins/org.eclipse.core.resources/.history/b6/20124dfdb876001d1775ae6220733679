@@ -251,7 +251,7 @@ static void AppTask_1000ms(void *p_arg)
     		state = 2;
     	}
 
-    	if(message > 4)
+    	if(message >= 3)
     	{
     		state = 0;
     	}

@@ -239,21 +239,16 @@ static void AppTask_1000ms(void *p_arg)
     		}
     	}
 
-    	if(message == 2)
+    	if(message == 1)
     	{
     		lednum++;
     		lednum %= 3;
     		state = 1;
     	}
 
-    	if(message == 4)
+    	if(message == 2)
     	{
     		state = 2;
-    	}
-
-    	if(message > 4)
-    	{
-    		state = 0;
     	}
 
     	OSTimeDlyHMSM(0u, 0u, 1u, 0u,
@@ -267,16 +262,15 @@ static void AppTask_ButtonInput(void *p_arg)
 {
     OS_ERR  err;
     int button = 0;
-    int prev_button = 0;
+
     while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
 
 
     	button = GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13);
 
-    	if(button != prev_button)
+    	if(button)
     	{
         	click++;
-        	prev_button = button;
     	}
 
         OSQPost( (OS_Q *)&BUT_Q,
@@ -285,7 +279,7 @@ static void AppTask_ButtonInput(void *p_arg)
     			 (OS_OPT)OS_OPT_POST_ALL,
     			 (OS_ERR *)&err);
 
-    	OSTimeDlyHMSM(0u, 0u, 0u, 250u,
+    	OSTimeDlyHMSM(0u, 0u, 0u, 50u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 
@@ -318,7 +312,7 @@ static void AppTask_CountInit(void *p_arg)
 	OS_ERR err;
 
 
-	// Initialize click count every 4seconds
+	// Initialize click count every 200ms
 	while (DEF_TRUE)
 	{
 		click = 0;
@@ -348,29 +342,13 @@ static void AppTask_CountInit(void *p_arg)
 static  void  AppTaskCreate (void)
 {
 	OS_ERR  err;
-	// Button Count Initialization Task, priority : 4, term : 2 second
-	OSTaskCreate(
-		(OS_TCB       *)&Task_CountInit_TCB,               /*      CountInit task         */
-		(CPU_CHAR     *)"AppTask_Countinit",
-		(OS_TASK_PTR   )AppTask_CountInit,
-		(void         *)0u,
-		(OS_PRIO       )6, // set priority
-		(CPU_STK      *)&Task_CountInit_Stack[0u],
-		(CPU_STK_SIZE  )Task_CountInit_Stack[APP_CFG_TASK_START_STK_SIZE / 10u],
-		(CPU_STK_SIZE  )APP_CFG_TASK_START_STK_SIZE,
-		(OS_MSG_QTY    )0u,
-		(OS_TICK       )0u,
-		(void         *)0u,
-		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
-		(OS_ERR       *)&err);
 
-	// LED Task, priority : 5, term : 1 second
 	OSTaskCreate(
 		(OS_TCB       *)&Task_1000ms_TCB,              /*       LED task        */
 		(CPU_CHAR     *)"AppTask_1000ms",
 		(OS_TASK_PTR   )AppTask_1000ms,
 		(void         *)0u,
-		(OS_PRIO       )4, // set priority
+		(OS_PRIO       )5, // set priority
 		(CPU_STK      *)&Task_1000ms_Stack[0u],
 		(CPU_STK_SIZE  )Task_1000ms_Stack[APP_CFG_TASK_START_STK_SIZE / 10u],
 		(CPU_STK_SIZE  )APP_CFG_TASK_START_STK_SIZE,
@@ -380,13 +358,12 @@ static  void  AppTaskCreate (void)
 		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
 		(OS_ERR       *)&err);
 
-	// Button Task, priority 6, term : 50ms
 	OSTaskCreate(
 		(OS_TCB       *)&Task_ButtonInput_TCB,         /*    ButtonInput task    */
 		(CPU_CHAR     *)"AppTask_ButtonInput",
 		(OS_TASK_PTR   )AppTask_ButtonInput,
 		(void         *)0u,
-		(OS_PRIO       )5, // set priority
+		(OS_PRIO       )6, // set priority
 		(CPU_STK      *)&Task_ButtonInput_Stack[0u],
 		(CPU_STK_SIZE  )Task_ButtonInput_Stack[APP_CFG_TASK_START_STK_SIZE / 10u],
 		(CPU_STK_SIZE  )APP_CFG_TASK_START_STK_SIZE,
@@ -410,6 +387,22 @@ static  void  AppTaskCreate (void)
 		(void         *)0u,
 		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
 		(OS_ERR       *)&err);
+
+	OSTaskCreate(
+		(OS_TCB       *)&Task_CountInit_TCB,               /*      CountInit task         */
+		(CPU_CHAR     *)"AppTask_Countinit",
+		(OS_TASK_PTR   )AppTask_CountInit,
+		(void         *)0u,
+		(OS_PRIO       )4, // set priority
+		(CPU_STK      *)&Task_CountInit_Stack[0u],
+		(CPU_STK_SIZE  )Task_CountInit_Stack[APP_CFG_TASK_START_STK_SIZE / 10u],
+		(CPU_STK_SIZE  )APP_CFG_TASK_START_STK_SIZE,
+		(OS_MSG_QTY    )0u,
+		(OS_TICK       )0u,
+		(void         *)0u,
+		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+		(OS_ERR       *)&err);
+
 }
 
 /*

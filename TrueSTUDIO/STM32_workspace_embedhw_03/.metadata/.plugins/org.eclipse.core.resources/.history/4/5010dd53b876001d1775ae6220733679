@@ -239,14 +239,14 @@ static void AppTask_1000ms(void *p_arg)
     		}
     	}
 
-    	if(message == 2)
+    	if(message == 1)
     	{
     		lednum++;
     		lednum %= 3;
     		state = 1;
     	}
 
-    	if(message == 4)
+    	if (message <= 4)
     	{
     		state = 2;
     	}
@@ -267,16 +267,15 @@ static void AppTask_ButtonInput(void *p_arg)
 {
     OS_ERR  err;
     int button = 0;
-    int prev_button = 0;
+
     while (DEF_TRUE) {                                          /* Task body, always written as an infinite loop.       */
 
 
     	button = GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13);
 
-    	if(button != prev_button)
+    	if(button)
     	{
         	click++;
-        	prev_button = button;
     	}
 
         OSQPost( (OS_Q *)&BUT_Q,
@@ -323,7 +322,7 @@ static void AppTask_CountInit(void *p_arg)
 	{
 		click = 0;
 
-		OSTimeDlyHMSM(0u, 0u, 2u, 0u,
+		OSTimeDlyHMSM(0u, 0u, 4u, 0u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 	}

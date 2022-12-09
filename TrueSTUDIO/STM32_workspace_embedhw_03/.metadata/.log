@@ -1,32 +1,32 @@
-!SESSION 2022-12-08 02:13:14.644 -----------------------------------------------
+!SESSION 2022-12-09 11:55:44.282 -----------------------------------------------
 eclipse.buildId=unknown
 java.version=1.8.0_181
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=ko_KR
-Framework arguments:  C:\Users\손재성\workplace\embeddedsystem_2022\source files\NUCLEO-f429zi_embedhw_3\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
-Command-line arguments:  -os win32 -ws win32 -arch x86 C:\Users\손재성\workplace\embeddedsystem_2022\source files\NUCLEO-f429zi_embedhw_3\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
+Framework arguments:  C:\Users\Jaesung Son\Documents\GitHub\embeddedsystem_2022\source files\NUCLEO-f429zi_embedhw_3\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86 C:\Users\Jaesung Son\Documents\GitHub\embeddedsystem_2022\source files\NUCLEO-f429zi_embedhw_3\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
 
-!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-08 02:13:18.955
+!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-09 11:56:08.883
 !MESSAGE Loading product manager
 
-!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-08 02:13:18.959
+!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-09 11:56:08.889
 !MESSAGE OS info: Windows 10, 10.0, x86
 
-!ENTRY TrueSTUDIO 1 0 2022-12-08 02:13:19.407
+!ENTRY TrueSTUDIO 1 0 2022-12-09 11:56:09.585
 !MESSAGE Target: STM32, Version: 9.3.0, Build date: 20190212-0734, Installation dir: /C:/Program Files (x86)/Atollic/TrueSTUDIO for STM32 9.3.0/ide/
 
-!ENTRY TrueSTUDIO 1 0 2022-12-08 02:13:19.407
-!MESSAGE Workspace: C:\Users\손재성\workplace\embeddedsystem_2022\TrueSTUDIO\STM32_workspace_embedhw_03
+!ENTRY TrueSTUDIO 1 0 2022-12-09 11:56:09.585
+!MESSAGE Workspace: C:\Users\Jaesung Son\Documents\GitHub\embeddedsystem_2022\TrueSTUDIO\STM32_workspace_embedhw_03
 
-!ENTRY org.eclipse.jface 2 0 2022-12-08 02:13:20.140
+!ENTRY org.eclipse.jface 2 0 2022-12-09 11:56:10.573
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
-!SUBENTRY 1 org.eclipse.jface 2 0 2022-12-08 02:13:20.140
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-12-09 11:56:10.573
 !MESSAGE A conflict occurred for ALT+CTRL+T:
 Binding(ALT+CTRL+T,
 	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.EditPropertiesCommand,Show Properties,
 		,
 		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1026e5c,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@a59698,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -34,451 +34,326 @@ Binding(ALT+CTRL+T,
 	ParameterizedCommand(Command(org.eclipse.tm.terminal.connector.local.command.launch,Open Local Terminal on Selection,
 		,
 		Category(org.eclipse.tm.terminal.view.ui.commands.category,터미널 명령어,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@421766,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@acb445,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
 
-!ENTRY com.atollic.truestudio.integration.processorexpert 0 0 2022-12-08 02:13:22.400
+!ENTRY com.atollic.truestudio.integration.processorexpert 0 0 2022-12-09 11:56:13.954
 !MESSAGE Atollic TrueSTUDIO Processor Expert integration is up.
 
-!ENTRY edu.hawaii.ics.csdl.jupiter 1 0 2022-12-08 02:13:22.411
+!ENTRY edu.hawaii.ics.csdl.jupiter 1 0 2022-12-09 11:56:14.076
 !MESSAGE Code Review is up.
 
-!ENTRY org.eclipse.cdt.core 1 0 2022-12-08 02:13:25.439
-!MESSAGE Indexed 'OS3' (61 sources, 51 headers) in 1.54 sec: 8,453 declarations; 34,630 references; 10 unresolved inclusions; 17 syntax errors; 5,653 unresolved names (12%)
+!ENTRY org.eclipse.egit.ui 2 0 2022-12-09 11:56:14.324
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Jaesung Son'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 
-!ENTRY org.eclipse.ui 4 4 2022-12-08 02:14:51.685
+!ENTRY org.eclipse.cdt.core 1 0 2022-12-09 11:56:18.927
+!MESSAGE Indexed 'OS3' (61 sources, 51 headers) in 2.94 sec: 8,482 declarations; 34,796 references; 10 unresolved inclusions; 17 syntax errors; 5,653 unresolved names (12%)
+
+!ENTRY org.eclipse.ui 4 4 2022-12-09 11:57:14.388
 !MESSAGE 참조된 부분에 아직 없습니다: org.eclipse.ui.views.TaskList.
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 02:38:37.521
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1704b86): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 02:38:37.521
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 11:57:26.728
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@4a23df): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 11:57:26.728
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 02:38:37.538
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@5ca811): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 02:38:37.538
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 11:57:26.748
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@14b9c5c): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 11:57:26.748
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 02:43:02.695
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@dbb282): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 02:43:02.695
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:04:45.769
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1e1c5f2): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:04:45.769
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 02:43:02.711
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1851f7c): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 02:43:02.712
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:04:45.789
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ff3946): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:04:45.789
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 02:45:07.412
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@88f931): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 02:45:07.412
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:06:50.175
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1fecf24): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:06:50.175
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 02:45:07.431
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1b7bb0e): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 02:45:07.431
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:06:50.194
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@4ecca7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:06:50.194
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:53:41.483
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@bc19ad): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:53:41.483
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:07:50.810
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@153e58): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:07:50.811
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:53:41.511
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@a73d49): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:53:41.511
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:07:50.829
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@8a4e53): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:07:50.829
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:55:30.851
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1868d37): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:55:30.851
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:09:42.334
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1805128): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:09:42.334
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:55:30.869
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@6fcd2e): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:55:30.869
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:09:42.355
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@c7c48): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:09:42.355
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:55:46.464
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@54c59c): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:55:46.464
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:33:55.234
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@3b24c2): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:33:55.234
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:55:46.483
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@e834de): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:55:46.483
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:33:55.256
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@14230be): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:33:55.256
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:57:38.114
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@16fc76d): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:57:38.114
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:38:24.104
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1258c49): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:38:24.104
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 03:57:38.142
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@b357bb): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 03:57:38.142
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:38:24.124
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@18ff733): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:38:24.124
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:02:40.414
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1716ab8): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:02:40.414
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:43:47.787
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1beb749): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:43:47.787
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:02:40.434
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@16307e4): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:02:40.434
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:43:47.806
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1e24abd): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:43:47.807
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:03:11.201
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1539a87): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:03:11.201
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:52:00.863
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@754212): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:52:00.863
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:03:11.217
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1c20e7a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:03:11.217
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:52:00.882
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@b9d8c7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:52:00.882
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:05:15.413
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@13e52a8): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:05:15.413
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:53:21.425
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@5b84d): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:53:21.426
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:05:15.430
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@47e240): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:05:15.430
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:53:21.447
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@af6e7f): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:53:21.447
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:07:33.923
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@18ed606): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:07:33.923
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:56:14.388
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@c3a534): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:56:14.388
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:07:33.940
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@13bea2a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:07:33.940
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 12:56:14.407
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1f3b03d): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 12:56:14.407
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:11:37.408
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1d0ff44): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:11:37.408
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:00:56.478
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@a1227f): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:00:56.478
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:11:37.426
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@67f4ee): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:11:37.426
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:00:56.498
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@31fac3): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:00:56.498
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:23:24.325
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1c8c610): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:23:24.326
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:01:23.829
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@16f6ac): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:01:23.829
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:23:24.343
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@e4ba5a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:23:24.343
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:01:23.850
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@8807f5): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:01:23.850
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:25:26.667
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@bb4543): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:25:26.667
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:05:24.854
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1b25014): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:05:24.854
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:25:26.691
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@d5d0a4): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:25:26.691
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:05:24.875
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ca37f6): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:05:24.875
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:27:34.941
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ca50c7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:27:34.941
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:59:04.151
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@c78fc8): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:59:04.151
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:27:34.960
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@3438a8): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:27:34.960
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 13:59:04.170
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@f1d3c3): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 13:59:04.170
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:28:51.867
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ae9d00): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:28:51.867
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:03:40.333
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@b2b6be): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:03:40.333
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 04:28:51.886
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@5158e6): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 04:28:51.886
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:03:40.356
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1c4fea3): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:03:40.356
 !MESSAGE Connection is shut down
 
-!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-08 04:30:46.683
-!MESSAGE Unloading product manager
-!SESSION 2022-12-08 13:02:50.828 -----------------------------------------------
-eclipse.buildId=unknown
-java.version=1.8.0_181
-java.vendor=Oracle Corporation
-BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=ko_KR
-Framework arguments:  C:\Users\손재성\workplace\embeddedsystem_2022\source files\NUCLEO-f429zi_embedhw_3\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
-Command-line arguments:  -os win32 -ws win32 -arch x86 C:\Users\손재성\workplace\embeddedsystem_2022\source files\NUCLEO-f429zi_embedhw_3\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
-
-!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-08 13:02:54.267
-!MESSAGE Loading product manager
-
-!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-08 13:02:54.278
-!MESSAGE OS info: Windows 10, 10.0, x86
-
-!ENTRY TrueSTUDIO 1 0 2022-12-08 13:02:55.919
-!MESSAGE Target: STM32, Version: 9.3.0, Build date: 20190212-0734, Installation dir: /C:/Program Files (x86)/Atollic/TrueSTUDIO for STM32 9.3.0/ide/
-
-!ENTRY TrueSTUDIO 1 0 2022-12-08 13:02:55.920
-!MESSAGE Workspace: C:\Users\손재성\workplace\embeddedsystem_2022\TrueSTUDIO\STM32_workspace_embedhw_03
-
-!ENTRY org.eclipse.jface 2 0 2022-12-08 13:02:58.101
-!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
-!SUBENTRY 1 org.eclipse.jface 2 0 2022-12-08 13:02:58.101
-!MESSAGE A conflict occurred for ALT+CTRL+T:
-Binding(ALT+CTRL+T,
-	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.EditPropertiesCommand,Show Properties,
-		,
-		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1dad235,
-		,,true),null),
-	org.eclipse.ui.defaultAcceleratorConfiguration,
-	org.eclipse.ui.contexts.window,,,system)
-Binding(ALT+CTRL+T,
-	ParameterizedCommand(Command(org.eclipse.tm.terminal.connector.local.command.launch,Open Local Terminal on Selection,
-		,
-		Category(org.eclipse.tm.terminal.view.ui.commands.category,터미널 명령어,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@92eff7,
-		,,true),null),
-	org.eclipse.ui.defaultAcceleratorConfiguration,
-	org.eclipse.ui.contexts.window,,,system)
-
-!ENTRY com.atollic.truestudio.integration.processorexpert 0 0 2022-12-08 13:03:02.691
-!MESSAGE Atollic TrueSTUDIO Processor Expert integration is up.
-
-!ENTRY edu.hawaii.ics.csdl.jupiter 1 0 2022-12-08 13:03:02.798
-!MESSAGE Code Review is up.
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:11:34.289
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ac8a8b): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:11:34.289
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:11:34.308
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@d61a9): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:11:34.308
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:33:00.718
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@11f8894): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:33:00.718
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:33:00.736
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@15372b2): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:33:00.736
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:34:05.161
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1632e42): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:34:05.161
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:34:05.179
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ba118e): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:34:05.179
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:34:39.959
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@176893a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:34:39.959
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:04:42.425
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@17426ce): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:04:42.425
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:34:39.978
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@2f3f01): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:34:39.978
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:04:42.445
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1bd449e): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:04:42.445
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:41:49.859
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@8302a0): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:41:49.859
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:12:42.062
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@ce201e): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:12:42.062
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:41:49.877
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@13396cb): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:41:49.877
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:12:42.084
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@14721b5): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:12:42.084
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:43:07.989
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1cfc9fa): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:43:07.989
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:13:30.192
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1867514): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:13:30.192
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:43:08.007
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@f4c1c7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:43:08.007
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:13:30.212
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@13725c2): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:13:30.212
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:44:55.034
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@35efca): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:44:55.034
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:14:51.560
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@17860f6): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:14:51.560
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:44:55.052
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1310000): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:44:55.052
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:14:51.581
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@171d0f9): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:14:51.581
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:47:56.009
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ef4e0f): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:47:56.009
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:16:55.776
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@172a126): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:16:55.776
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 13:47:56.029
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1446386): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 13:47:56.029
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:16:55.803
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@101c2f7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:16:55.803
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:00:52.741
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@126725a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:00:52.741
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:19:32.521
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@18b4ee9): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:19:32.521
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:00:52.764
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@9c90fd): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:00:52.764
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:19:32.540
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1a28764): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:19:32.540
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:05:14.972
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@70dd8b): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:05:14.972
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:20:59.159
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@f76e84): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:20:59.159
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:05:14.991
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1628f13): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:05:14.991
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:20:59.181
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@10f5ec9): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:20:59.181
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:07:19.874
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1f4d71): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:07:19.874
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:23:21.733
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@14c2f8a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:23:21.733
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:07:19.893
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@41ced8): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:07:19.893
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:23:21.756
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@3a1c97): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:23:21.756
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:09:17.496
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1481ba5): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:09:17.496
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:23:59.931
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1ab0f1a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:23:59.931
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:09:17.514
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1a1659a): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:09:17.514
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:23:59.950
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@19be1b): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:23:59.950
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:10:15.153
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@171b62c): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:10:15.153
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:24:32.184
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@19cc219): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:24:32.184
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:10:15.182
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1de0c65): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:10:15.182
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:24:32.206
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@44560d): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:24:32.206
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:13:04.481
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@11024fe): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:13:04.481
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:34:14.312
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@19e0146): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:34:14.312
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:13:04.500
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@18586c5): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:13:04.500
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:34:14.331
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@16b7bf6): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:34:14.331
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:15:50.535
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@e68670): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:15:50.535
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:34:59.563
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1b3d95): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:34:59.563
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:15:50.554
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@3b6722): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:15:50.554
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:34:59.583
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1553262): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:34:59.583
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:19:08.797
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@eaf02c): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:19:08.798
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:35:45.677
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@72a3cf): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:35:45.677
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:19:08.817
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@4397b7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:19:08.817
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:35:45.696
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@ca3df): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:35:45.696
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:21:03.268
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@15f02e7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:21:03.269
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:37:08.956
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1530ab7): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:37:08.956
 !MESSAGE Connection is shut down
 
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:21:03.286
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1abb01f): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:21:03.286
+!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 14:37:08.974
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@643716): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 14:37:08.974
 !MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:22:09.118
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@5dcb79): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:22:09.118
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:22:09.136
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@d410db): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:22:09.136
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:23:48.438
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@ff5489): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:23:48.438
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:23:48.455
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@fddd3e): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:23:48.455
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:26:35.323
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@16c473b): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:26:35.323
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:26:35.342
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@f16618): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:26:35.342
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:27:07.715
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@28869f): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:27:07.715
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-08 14:27:07.733
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@918928): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-08 14:27:07.733
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 10:48:26.847
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@47b1e1): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 10:48:26.847
-!MESSAGE Connection is shut down
-
-!ENTRY org.eclipse.cdt.dsf 4 10005 2022-12-09 10:48:26.869
-!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@158e970): Status ERROR: org.eclipse.cdt.dsf code=10001  null children=[Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down null]' resulted in an error.
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2022-12-09 10:48:26.869
-!MESSAGE Connection is shut down
-
-!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-09 10:48:31.466
-!MESSAGE Unloading product manager

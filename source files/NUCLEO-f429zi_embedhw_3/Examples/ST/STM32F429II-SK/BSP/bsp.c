@@ -51,6 +51,7 @@
 #define BSP_GPIOB_LED3	DEF_BIT_14
 
 #define BSP_GPIOC_PUSH	DEF_BIT_13
+#define BSP_USART1
 
 /*
 *********************************************************************************************************
@@ -224,7 +225,7 @@
 
 static  void  BSP_LED_Init  (void);
 static  void  BSP_PUSH_BUTTON_Init(void);
-
+static void USART_Config(void);
 
 /*
 *********************************************************************************************************
@@ -908,3 +909,85 @@ CPU_INT64U  CPU_TS64_to_uSec (CPU_TS64  ts_cnts)
     return (ts_us);
 }
 #endif
+
+
+USART_TypeDef* COM_USART[COMn] = {Nucleo_COM1};
+GPIO_TypeDef* COM_TX_PORT[COMn] = {Nucleo_COM1_TX_GPIO_PORT};
+GPIO_TypeDef* COM_RX_PORT[COMn] = {Nucleo_COM1_RX_GPIO_PORT};
+const uint32_t COM_USART_CLK[COMn] = {Nucleo_COM1_CLK};
+const uint32_t COM_TX_PORT_CLK[COMn] = {Nucleo_COM1_TX_GPIO_CLK};
+const uint32_t COM_RX_PORT_CLK[COMn] = {Nucleo_COM1_RX_GPIO_CLK};
+const uint16_t COM_TX_PIN[COMn] = {Nucleo_COM1_TX_PIN};
+const uint16_t COM_RX_PIN[COMn] = {Nucleo_COM1_RX_PIN};
+const uint16_t COM_TX_PIN_SOURCE[COMn] = {Nucleo_COM1_TX_SOURCE};
+const uint16_t COM_RX_PIN_SOURCE[COMn] = {Nucleo_COM1_RX_SOURCE};
+const uint16_t COM_TX_AF[COMn] = {Nucleo_COM1_TX_AF};
+const uint16_t COM_RX_AF[COMn] = {Nucleo_COM1_RX_AF};
+
+
+void STM_Nucleo_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Enable GPIO clock */
+  RCC_AHB1PeriphClockCmd(COM_TX_PORT_CLK[COM] | COM_RX_PORT_CLK[COM], ENABLE);
+
+  if (COM == COM1)
+  {
+    /* Enable UART clock */
+    RCC_APB1PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
+  }
+
+  /* Connect PXx to USARTx_Tx*/
+  GPIO_PinAFConfig(COM_TX_PORT[COM], COM_TX_PIN_SOURCE[COM], COM_TX_AF[COM]);
+
+  /* Connect PXx to USARTx_Rx*/
+  GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
+
+  /* Configure USART Tx as alternate function  */
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+
+  GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStructure);
+
+  /* Configure USART Rx as alternate function  */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
+  GPIO_Init(COM_RX_PORT[COM], &GPIO_InitStructure);
+
+  /* USART configuration */
+  USART_Init(COM_USART[COM], USART_InitStruct);
+
+  /* Enable USART */
+  USART_Cmd(COM_USART[COM], ENABLE);
+}
+
+
+
+
+static void USART_Config(void)
+{
+  USART_InitTypeDef USART_InitStructure;
+
+  /* USARTx configured as follows:
+        - BaudRate = 115200 baud
+        - Word Length = 8 Bits
+        - One Stop Bit
+        - No parity
+        - Hardware flow control disabled (RTS and CTS signals)
+        - Receive and transmit enabled
+  */
+  USART_InitStructure.USART_BaudRate = 115200;
+  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+  USART_InitStructure.USART_StopBits = USART_StopBits_1;
+  USART_InitStructure.USART_Parity = USART_Parity_No;
+  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+
+  STM_Nucleo_COMInit(COM1, &USART_InitStructure);
+}
+
+

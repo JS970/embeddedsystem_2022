@@ -38,6 +38,7 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx.h"
+#include "bsp.h"
 /*
 *********************************************************************************************************
 *                                            LOCAL DEFINES
@@ -103,6 +104,15 @@ static int click = 0;
 *********************************************************************************************************
 */
 
+void send_string(const char *str)
+{
+    while (*str)
+    {
+        while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_TXE) == RESET);
+        USART_SendData(Nucleo_COM1, *str++);
+    }
+}
+
 int main(void)
 {
     OS_ERR  err;
@@ -117,7 +127,6 @@ int main(void)
     CPU_Init();                                                 /* Initialize the uC/CPU Services                       */
     Mem_Init();                                                 /* Initialize Memory Management Module                  */
     Math_Init();                                                /* Initialize Mathematical Module                       */
-
 
     /* OS Init */
     OSInit(&err);                                               /* Init uC/OS-III.                                      */
@@ -279,19 +288,21 @@ static void AppTask_ButtonInput(void *p_arg)
         	prev_button = button;
     	}
 
+
         OSQPost( (OS_Q *)&BUT_Q,
         		 (void *)click,
     			 (OS_MSG_SIZE)sizeof(int *),
     			 (OS_OPT)OS_OPT_POST_ALL,
     			 (OS_ERR *)&err);
 
-    	OSTimeDlyHMSM(0u, 0u, 0u, 250u,
+        OSTimeDlyHMSM(0u, 0u, 0u, 250u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 
     }
 }
 
+int startflag = 1;
 static void AppTask_USART(void *p_arg)
 {
 	OS_ERR err;
@@ -299,6 +310,11 @@ static void AppTask_USART(void *p_arg)
 
 	while (DEF_TRUE)
 	{
+		if(startflag)
+		{
+			send_string("\n\rSystem start \n\r");
+			startflag = 0;
+		}
 
 		message = (int)OSQPend((OS_Q *)&BUT_Q,
 							   (OS_TICK)0u, // wait forever
@@ -306,6 +322,22 @@ static void AppTask_USART(void *p_arg)
 							   (OS_MSG_SIZE *)sizeof(int *),
 							   (CPU_TS *)0,
 							   (OS_ERR *)&err);
+
+    	if(message == 2)
+    	{
+
+    	}
+
+    	if(message == 4)
+    	{
+
+    	}
+
+    	if(message > 4)
+    	{
+
+    	}
+
 
 		OSTimeDlyHMSM(0u, 0u, 0u, 500u,
                       OS_OPT_TIME_HMSM_STRICT,

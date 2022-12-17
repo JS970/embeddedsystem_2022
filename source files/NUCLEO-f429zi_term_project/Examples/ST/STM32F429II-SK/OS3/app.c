@@ -66,6 +66,16 @@ static void AppTask_1000ms(void *p_arg);
 static void AppTask_ButtonInput(void *p_arg);
 static void AppTask_USART(void *p_arg);
 static void AppTask_Countinit(void *p_arg);
+
+void DHT11_Start(void);
+uint8_t DHT11_response(void);
+uint8_t DHT11_read(void);
+void send_intval(unsigned char data);
+static void RGB_RED();
+static void RGB_BLUE();
+static void RGB_GREEN();
+static void MotorSpeed(uint32_t speed);
+static void ServoControl(uint32_t angle);
 /*
 *********************************************************************************************************
 *                                       LOCAL GLOBAL VARIABLES
@@ -109,7 +119,7 @@ int main(void)
     OS_ERR  err;
 
     /* Basic Init */
-    RCC_DeInit();
+     RCC_DeInit();
 //    SystemCoreClockUpdate();
 
     /* BSP Init */
@@ -139,7 +149,6 @@ int main(void)
    OSStart(&err);   /* Start multitasking (i.e. give control to uC/OS-III). */
 
    (void)&err;
-
    return (0u);
 }
 /*
@@ -255,7 +264,11 @@ static int startflag = 1;
 static void AppTask_USART(void *p_arg)
 {
 	OS_ERR err;
-	int message;
+	uint8_t Rh_byte1 = 0;
+	uint8_t Rh_byte2 = 0;
+	uint8_t Temp_byte1 = 0;
+	uint8_t Temp_byte2 = 0;
+	uint8_t checksum = 0;
 
 	while (DEF_TRUE)
 	{
@@ -265,18 +278,9 @@ static void AppTask_USART(void *p_arg)
 			startflag = 0;
 		}
 
-		// humidity		// // temperature // checksum
-		// 0 1 2 ... 15 // // 16 ... 31   // 32 ... 39 //
-
-		int adc1 = adc_value1();
-		adc1 <<= 16;
-    	send_intval('\n');
-    	send_intval('\r');
-    	send_intval((adc1/1000) + '0');
-    	send_intval((adc1%1000) / 100 + '0');
-    	send_intval((adc1%100) / 10 + '0');
-    	send_intval((adc1%10) + '0');
-
+		RGB_BLUE();
+		MotorSpeed(9999);
+		ServoControl(499999);
 
 		OSTimeDlyHMSM(0u, 0u, 1u, 0u,
                       OS_OPT_TIME_HMSM_STRICT,
@@ -369,9 +373,41 @@ static  void  AppTaskCreate (void)
 *********************************************************************************************************
 */
 
+void TIM_Configure(void)
+{
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+
+	// Timer 2 : count 18ms
+	TIM_TimeBaseStructure.TIM_Period = 18000; // 18000us == 18ms
+	TIM_TimeBaseStructure.TIM_Prescaler = 45-1; // count every 1us
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+
+	// Timer 3 : count 40us
+	TIM_TimeBaseStructure.TIM_Period = 40; // 40us
+	TIM_TimeBaseStructure.TIM_Prescaler = 45-1; // count every 1us
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+
+	/*
+	// Timer 4 : count 80us
+	TIM_TimeBaseStructure.TIM_Period = 80; // 80us
+	TIM_TimeBaseStructure.TIM_Prescaler = 45-1; // count every 1us
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
+	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+	 */
+}
+
 static  void  AppObjCreate (void)
 {
 	OS_ERR err;
+	TIM_Configure();
 
 	OSQCreate((OS_Q *)&BUT_Q,
 			  (CPU_CHAR *)"Button Queue",
@@ -379,16 +415,220 @@ static  void  AppObjCreate (void)
 			  (OS_ERR *)&err);
 }
 
-int adc_value1()
+/*
+	DC Motor Duty Cycle
+	0%   : 4,500 *   (0/100) - 1 = 0
+	25%  : 4,500 *  (25/100) - 1 = 1,124
+	50%  : 4,500 *  (50/100) - 1 = 2,249
+	75%  : 4,500 *  (75/100) - 1 = 3,374
+	100% : 4,500 * (100/100) - 1 = 4,999
+*/
+static void MotorSpeed(uint32_t speed)
 {
-	ADC_SoftwareStartConv(ADC1);
-	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
-	int adc = ADC_GetConversionValue(ADC1);
-	return adc;
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+	TIM_OCStruct.TIM_Pulse = speed;
+	TIM_OC1Init(TIM3, &TIM_OCStruct);
+	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
+}
+
+/*
+	RGB LED Duty Cycle
+	0%   : 450,000 *   (0/100) - 1 = 0
+	25%  : 450,000 *  (25/100) - 1 = 124,999
+	50%  : 450,000 *  (50/100) - 1 = 249,999
+	75%  : 450,000 *  (75/100) - 1 = 374,999
+	100% : 450,000 * (100/100) - 1 = 499,999
+*/
+static void RGB_RED()
+{
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+	/* red use PWM channel 1 */
+	TIM_OCStruct.TIM_Pulse = 499999;
+	TIM_OC1Init(TIM4, &TIM_OCStruct);
+	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	/* make other color's PWM to 0 */
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC2Init(TIM4, &TIM_OCStruct);
+	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC3Init(TIM4, &TIM_OCStruct);
+	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
+}
+
+static void RGB_BLUE()
+{
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+	/* blue use PWM channel 2 */
+	TIM_OCStruct.TIM_Pulse = 499999;
+	TIM_OC2Init(TIM4, &TIM_OCStruct);
+	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	/* make other color's PWM to 0 */
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC3Init(TIM4, &TIM_OCStruct);
+	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC1Init(TIM4, &TIM_OCStruct);
+	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+}
+
+static void RGB_GREEN()
+{
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+	/* green use PWM channel 3 */
+	TIM_OCStruct.TIM_Pulse = 499999;
+	TIM_OC3Init(TIM4, &TIM_OCStruct);
+	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	/* make other color's PWM to 0 */
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC1Init(TIM4, &TIM_OCStruct);
+	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC2Init(TIM4, &TIM_OCStruct);
+	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
+}
+
+static void ServoControl(uint32_t angle)
+{
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+	/* green use PWM channel 3 */
+	TIM_OCStruct.TIM_Pulse = angle;
+	TIM_OC4Init(TIM4, &TIM_OCStruct);
+	TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
+}
+
+
+/*
+// wait for 18ms
+void delay18ms(void)
+{
+	TIM_Cmd(TIM2,ENABLE);
+	TIM_ITConfig(TIM2,TIM_IT_Update, ENABLE);
+
+	while(TIM_GetITStatus(TIM2, TIM_IT_Update) == RESET);
+	if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+
+	TIM_Cmd(TIM2,DISABLE);
+}
+
+// wait for 40us
+void delay40us(void)
+{
+	TIM_Cmd(TIM3,ENABLE);
+	TIM_ITConfig(TIM3,TIM_IT_Update, ENABLE);
+
+	while(TIM_GetITStatus(TIM3, TIM_IT_Update) == RESET);
+	if(TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
+		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+
+	TIM_Cmd(TIM3,DISABLE);
+}
+
+// wait for 80us
+void delay80us(void)
+{
+	TIM_Cmd(TIM4,ENABLE);
+	TIM_ITConfig(TIM4,TIM_IT_Update, ENABLE);
+
+	while(TIM_GetITStatus(TIM4, TIM_IT_Update) == RESET);
+	if(TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
+		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+
+	TIM_Cmd(TIM4,DISABLE);
+}
+
+void DHT11_Start(void)
+{
+	// set pin output low
+    GPIO_ResetBits(GPIOC, GPIO_Pin_8);
+    GPIO_ResetBits(GPIOC, GPIO_Pin_9);
+
+    // wait for 18ms
+    delay18ms();
+    // set pin output high
+    GPIO_SetBits(GPIOC, GPIO_Pin_8);
+    GPIO_SetBits(GPIOC, GPIO_Pin_9);
+
+    // set pin as input
+    GPIO_InitTypeDef gpio_init = {0};
+    gpio_init.GPIO_Mode		= GPIO_Mode_IN;
+    gpio_init.GPIO_OType	= GPIO_OType_PP;
+    gpio_init.GPIO_Speed	= GPIO_Speed_2MHz;
+    gpio_init.GPIO_PuPd		= GPIO_PuPd_NOPULL;
+    gpio_init.GPIO_Pin		= GPIO_Pin_8 | GPIO_Pin_9;
+    GPIO_Init(GPIOC, GPIO_Pin_8);
+    GPIO_Init(GPIOC, GPIO_Pin_8);
+}
+
+uint8_t DHT11_response(void)
+{
+	uint8_t response = 0;
+
+	delay40us();
+	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8))
+	{
+		delay80us();
+		if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)) response = 1;
+		else
+		{
+			response = -1;
+			send_string("\n\rresponse is -1 \n\r");
+		}
+	}
+	while(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)); // wait until value is 0
+
+	return response;
+}
+
+uint8_t DHT11_read(void)
+{
+	send_string("\n\rentering DHT11 Read function \n\r");
+	uint8_t i, j;
+	send_string("\n\rbefore for loop \n\r");
+	for(j = 0; j < 8; j++)
+	{
+		send_string("\n\rbefore while loop \n\r");
+		while(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)); // 계속 0이여서 루프 탈출이 안됨
+		send_string("\n\rafter for loop \n\r");
+		delay40us();
+		if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8))
+		{
+			i &= ~(1<<(7-j));
+		}
+		else i |= (1<<(7-j));
+		while(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)); // wait until value go to 0
+	}
+	return i;
 }
 
 void send_intval(unsigned char data)
 {
     while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_TXE) == RESET);
     USART_SendData(Nucleo_COM1, data);
-}
+}*/

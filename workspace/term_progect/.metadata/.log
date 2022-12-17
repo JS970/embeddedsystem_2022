@@ -1,0 +1,52 @@
+!SESSION 2022-12-18 01:54:36.392 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_181
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=ko_KR
+Framework arguments:  C:\Users\손재성\workplace\embeddedsystem_2022\source files\NUCLEO-f429zi_term_project\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86 C:\Users\손재성\workplace\embeddedsystem_2022\source files\NUCLEO-f429zi_term_project\Examples\ST\STM32F429II-SK\OS3\TrueSTUDIO\.project
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-18 01:54:40.092
+!MESSAGE Loading product manager
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-18 01:54:40.101
+!MESSAGE OS info: Windows 10, 10.0, x86
+
+!ENTRY TrueSTUDIO 1 0 2022-12-18 01:54:41.208
+!MESSAGE Target: STM32, Version: 9.3.0, Build date: 20190212-0734, Installation dir: /C:/Program Files (x86)/Atollic/TrueSTUDIO for STM32 9.3.0/ide/
+
+!ENTRY TrueSTUDIO 1 0 2022-12-18 01:54:41.208
+!MESSAGE Workspace: C:\Users\손재성\workplace\embeddedsystem_2022\workspace\term_progect
+
+!ENTRY org.eclipse.jface 2 0 2022-12-18 01:54:43.244
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-12-18 01:54:43.244
+!MESSAGE A conflict occurred for ALT+CTRL+T:
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.EditPropertiesCommand,Show Properties,
+		,
+		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1e69f7e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.tm.terminal.connector.local.command.launch,Open Local Terminal on Selection,
+		,
+		Category(org.eclipse.tm.terminal.view.ui.commands.category,터미널 명령어,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@544ee4,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.atollic.truestudio.integration.processorexpert 0 0 2022-12-18 01:54:47.274
+!MESSAGE Atollic TrueSTUDIO Processor Expert integration is up.
+
+!ENTRY edu.hawaii.ics.csdl.jupiter 1 0 2022-12-18 01:54:47.374
+!MESSAGE Code Review is up.
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-12-18 01:54:50.870
+!MESSAGE Indexed 'OS3' (61 sources, 51 headers) in 1.77 sec: 8,559 declarations; 35,379 references; 10 unresolved inclusions; 17 syntax errors; 5,800 unresolved names (12%)
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2022-12-18 01:55:02.695
+!MESSAGE Unloading product manager

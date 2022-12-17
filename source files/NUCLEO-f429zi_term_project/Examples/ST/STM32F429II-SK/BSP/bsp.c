@@ -226,7 +226,8 @@ static  void  BSP_LED_Init  (void);
 static  void  BSP_PUSH_BUTTON_Init(void);
 static  void  BSP_TEMP_ANALOG_Init(void);
 static  void  USART_Config(void);
-
+static  void  BSP_PWM_Init(void);
+static  void  BSP_RGB_Init(void);
 
 /*
 *********************************************************************************************************
@@ -354,9 +355,11 @@ void  BSP_Init (void)
     }
 
     BSP_LED_Init();                                             /* Initialize user LEDs                                 */
+    BSP_RGB_Init();
     USART_Config();
     BSP_PUSH_BUTTON_Init();
     BSP_TEMP_ANALOG_Init();
+    BSP_PWM_Init();
 
 #ifdef TRACE_EN                                                 /* See project / compiler preprocessor options.         */
     BSP_CPU_REG_DBGMCU_CR |=  BSP_DBGMCU_CR_TRACE_IOEN_MASK;    /* Enable tracing (see Note #2).                        */
@@ -463,6 +466,22 @@ static void  BSP_LED_Init()
 	   GPIO_Init(GPIOB, &led_init);
 }
 
+static void BSP_RGB_Init()
+{
+	   GPIO_InitTypeDef rgb_init = {0};
+
+	   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	   RCC_AHB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+	   rgb_init.GPIO_Mode   = GPIO_Mode_OUT;
+	   rgb_init.GPIO_OType  = GPIO_OType_PP;
+	   rgb_init.GPIO_Speed  = GPIO_Speed_2MHz;
+	   rgb_init.GPIO_PuPd   = GPIO_PuPd_NOPULL;
+	   rgb_init.GPIO_Pin    = GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+
+	   GPIO_Init(GPIOD, &rgb_init);
+}
+
 static void  BSP_PUSH_BUTTON_Init()
 {
    GPIO_InitTypeDef button_init = {0};
@@ -485,27 +504,70 @@ static void  BSP_TEMP_ANALOG_Init()
    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
-   button_init.GPIO_Mode   = GPIO_Mode_AN;
+   button_init.GPIO_Mode   = GPIO_Mode_OUT;;
    button_init.GPIO_OType  = GPIO_OType_PP;
    button_init.GPIO_Speed  = GPIO_Speed_2MHz;
-   button_init.GPIO_PuPd   = GPIO_PuPd_DOWN;
-   button_init.GPIO_Pin    = GPIO_Pin_0 | GPIO_Pin_3;
-
+   button_init.GPIO_PuPd   = GPIO_PuPd_NOPULL; // is this right???
+   button_init.GPIO_Pin    = GPIO_Pin_8 | GPIO_Pin_9;
    GPIO_Init(GPIOC, &button_init);
 
-   ADC_InitTypeDef adc = {0};
-   adc.ADC_Resolution = ADC_Resolution_8b;
-   adc.ADC_ScanConvMode = DISABLE;
-   adc.ADC_ContinuousConvMode = ENABLE;
-   adc.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None;
-   adc.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConv_T1_CC1;
-   adc.ADC_DataAlign = ADC_DataAlign_Right;
-   adc.ADC_NbrOfConversion = 1;
-   ADC_RegularChannelConfig(ADC1, ADC_Channel_12,1, ADC_SampleTime_144Cycles);
+   // set pins high - idle
+   GPIO_SetBits(GPIOC, GPIO_Pin_8);
+   GPIO_SetBits(GPIOC, GPIO_Pin_9);
+}
 
-   ADC_Init(ADC1, &adc);
-   ADC_Cmd(ADC1, ENABLE);
+static void BSP_PWM_Init()
+{
+	GPIO_InitTypeDef GPIO_InitStruct;
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 
+	/* GPIO Initialization for RGB */
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4);
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_TIM4);
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_TIM4);
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_TIM4);
+
+	GPIO_InitStruct.GPIO_Pin 	= GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+	GPIO_InitStruct.GPIO_OType 	= GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd	= GPIO_PuPd_NOPULL;
+	GPIO_InitStruct.GPIO_Mode	= GPIO_Mode_AF;
+	GPIO_InitStruct.GPIO_Speed	= GPIO_Speed_100MHz;
+	GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+	/* Timer Initialization for RGB*/
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+
+	TIM_TimeBaseStructure.TIM_Period = 449999; // 45,000,000 / 450,000 = 100Hz
+	TIM_TimeBaseStructure.TIM_Prescaler = 0; // prescaler have tick frequency
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+	TIM_Cmd(TIM4, ENABLE);
+
+
+	/* GPIO Initialization for DC motor */
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);
+
+	GPIO_InitStruct.GPIO_Pin 	= GPIO_Pin_4;
+	GPIO_InitStruct.GPIO_OType 	= GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd	= GPIO_PuPd_NOPULL;
+	GPIO_InitStruct.GPIO_Mode	= GPIO_Mode_AF;
+	GPIO_InitStruct.GPIO_Speed	= GPIO_Speed_100MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/* Timer Initialization for DC motor */
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+
+	TIM_TimeBaseStructure.TIM_Period = 9999;
+	TIM_TimeBaseStructure.TIM_Prescaler = 44;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+	TIM_Cmd(TIM3, ENABLE);
 }
 
 /*

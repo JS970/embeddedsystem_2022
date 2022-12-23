@@ -67,15 +67,12 @@ static void AppTask_ButtonInput(void *p_arg);
 static void AppTask_USART(void *p_arg);
 static void AppTask_Countinit(void *p_arg);
 
-void DHT11_Start(void);
-uint8_t DHT11_response(void);
-uint8_t DHT11_read(void);
-void send_intval(unsigned char data);
 static void RGB_RED();
 static void RGB_BLUE();
 static void RGB_GREEN();
-static void MotorSpeed(uint32_t speed);
-static void ServoControl(uint32_t angle);
+static void RGB_OFF();
+
+static char password[5] = {0, };
 /*
 *********************************************************************************************************
 *                                       LOCAL GLOBAL VARIABLES
@@ -97,7 +94,7 @@ static  CPU_STK  Task_USART_Stack[APP_CFG_TASK_START_STK_SIZE];
 static  OS_TCB   Task_CountInit_TCB;
 static  CPU_STK  Task_CountInit_Stack[APP_CFG_TASK_START_STK_SIZE];
 
-static  OS_Q	 BUT_Q;
+static  OS_Q	 PWD_Q;
 
 static int click = 0;
 /* ------------ FLOATING POINT TEST TASK -------------- */
@@ -207,26 +204,45 @@ static  void  AppTaskStart (void *p_arg)
 * Note: Long period used to measure timing in person
 *********************************************************************************************************
 */
-static int state = 0;
-static int lednum = 0;
+
 static void AppTask_1000ms(void *p_arg)
 {
     OS_ERR  err;
-    BSP_LED_Off(1);
-    BSP_LED_Off(2);
-    BSP_LED_Off(3);
+    char pw[4];
+    int idx = 0;
+    char message;
 
     while (DEF_TRUE)
-    {                                          /* Task body, always written as an infinite loop.       */
+    {
+		message = (char)OSQPend((OS_Q *)&PWD_Q,
+							   (OS_TICK)0u, // wait forever
+							   (OS_OPT)OS_OPT_PEND_BLOCKING,
+							   (OS_MSG_SIZE *)sizeof(char *),
+							   (CPU_TS *)0,
+							   (OS_ERR *)&err);
 
-		BSP_LED_Toggle(1);
-		BSP_LED_Toggle(2);
-		BSP_LED_Toggle(3);
+		pw[idx++] = message;
+		if(idx == 4) idx = 0;
 
-        OSTimeDlyHMSM(0u, 0u, 1u, 0u,
+		if(init_flag != 1)
+		{
+			if(pw[0] == '1')
+			{
+				if(pw[1] == '1')
+				{
+					if(pw[2] == '1')
+						RGB_GREEN();
+					else
+						RGB_RED();
+				}
+			}
+		}
+
+        OSTimeDlyHMSM(0u, 0u, 2u, 0u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 
+        RGB_OFF();
     }
 }
 
@@ -247,7 +263,7 @@ static void AppTask_ButtonInput(void *p_arg)
     	}
 
 
-        OSQPost( (OS_Q *)&BUT_Q,
+        OSQPost( (OS_Q *)&PWD_Q,
         		 (void *)click,
     			 (OS_MSG_SIZE)sizeof(int *),
     			 (OS_OPT)OS_OPT_POST_ALL,
@@ -264,43 +280,67 @@ static int startflag = 1;
 static void AppTask_USART(void *p_arg)
 {
 	OS_ERR err;
-	uint8_t Rh_byte1 = 0;
-	uint8_t Rh_byte2 = 0;
-	uint8_t Temp_byte1 = 0;
-	uint8_t Temp_byte2 = 0;
-	uint8_t checksum = 0;
+	int idx = 0;
 
 	while (DEF_TRUE)
 	{
 		if(startflag)
 		{
 			send_string("\n\rSystem start \n\r");
+			send_string("\n\rPassword : ");
 			startflag = 0;
 		}
 
-		RGB_BLUE();
-		MotorSpeed(9999);
-		ServoControl(499999);
+		if(USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_RXNE))
+			if(!startflag)
+				send_string("\n\rPassword : ");
+		idx = 0;
+		while(USART_ReceiveData(Nucleo_COM1) != '`')
+		{
+			while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_RXNE) == RESET) { }
 
-		OSTimeDlyHMSM(0u, 0u, 1u, 0u,
+			password[idx] = USART_ReceiveData(Nucleo_COM1);
+			USART_SendData(Nucleo_COM1, password[idx]);
+	        OSQPost( (OS_Q *)&PWD_Q,
+	        		 (void *)password[idx],
+	    			 (OS_MSG_SIZE)sizeof(char *),
+	    			 (OS_OPT)OS_OPT_POST_ALL,
+	    			 (OS_ERR *)&err);
+			idx++;
+		}
+
+		OSTimeDlyHMSM(0u, 0u, 0u, 1u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
 	}
 }
 
+int init_flag = 0;
 static void AppTask_CountInit(void *p_arg)
 {
 	OS_ERR err;
+	char message;
 
+	message = (char)OSQPend((OS_Q *)&PWD_Q,
+						   (OS_TICK)0u, // wait forever
+						   (OS_OPT)OS_OPT_PEND_BLOCKING,
+						   (OS_MSG_SIZE *)sizeof(char *),
+						   (CPU_TS *)0,
+						   (OS_ERR *)&err);
 
 	// Initialize click count every 4seconds
 	while (DEF_TRUE)
 	{
-		click = 0;
+		if(message != '\0')
+			OSTimeDlyHMSM(0u, 0u, 5u, 0u,
+	                      OS_OPT_TIME_HMSM_STRICT,
+	                      &err);
 
-		OSTimeDlyHMSM(0u, 0u, 2u, 0u,
+		init_flag = 1;
+		OSTimeDlyHMSM(0u, 0u, 1u, 0u,
                       OS_OPT_TIME_HMSM_STRICT,
                       &err);
+		init_flag = 0;
 	}
 }
 
@@ -355,6 +395,21 @@ static  void  AppTaskCreate (void)
 		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
 		(OS_ERR       *)&err);
 
+	// Button Count Initialization Task, priority : 6, term : 2 second
+	OSTaskCreate(
+		(OS_TCB       *)&Task_CountInit_TCB,               /*      CountInit task         */
+		(CPU_CHAR     *)"AppTask_Countinit",
+		(OS_TASK_PTR   )AppTask_CountInit,
+		(void         *)0u,
+		(OS_PRIO       )6, // set priority
+		(CPU_STK      *)&Task_CountInit_Stack[0u],
+		(CPU_STK_SIZE  )Task_CountInit_Stack[APP_CFG_TASK_START_STK_SIZE / 10u],
+		(CPU_STK_SIZE  )APP_CFG_TASK_START_STK_SIZE,
+		(OS_MSG_QTY    )0u,
+		(OS_TICK       )0u,
+		(void         *)0u,
+		(OS_OPT        )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
+		(OS_ERR       *)&err);
 }
 
 /*
@@ -373,66 +428,14 @@ static  void  AppTaskCreate (void)
 *********************************************************************************************************
 */
 
-void TIM_Configure(void)
-{
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
-
-	// Timer 2 : count 18ms
-	TIM_TimeBaseStructure.TIM_Period = 18000; // 18000us == 18ms
-	TIM_TimeBaseStructure.TIM_Prescaler = 45-1; // count every 1us
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
-	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-
-	// Timer 3 : count 40us
-	TIM_TimeBaseStructure.TIM_Period = 40; // 40us
-	TIM_TimeBaseStructure.TIM_Prescaler = 45-1; // count every 1us
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
-	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
-
-	/*
-	// Timer 4 : count 80us
-	TIM_TimeBaseStructure.TIM_Period = 80; // 80us
-	TIM_TimeBaseStructure.TIM_Prescaler = 45-1; // count every 1us
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
-	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
-	 */
-}
-
 static  void  AppObjCreate (void)
 {
 	OS_ERR err;
-	TIM_Configure();
 
-	OSQCreate((OS_Q *)&BUT_Q,
-			  (CPU_CHAR *)"Button Queue",
-			  (OS_MSG_QTY)1, // Queue size = 1
+	OSQCreate((OS_Q *)&PWD_Q,
+			  (CPU_CHAR *)"password queue",
+			  (OS_MSG_QTY)5, // Queue size = 1
 			  (OS_ERR *)&err);
-}
-
-/*
-	DC Motor Duty Cycle
-	0%   : 4,500 *   (0/100) - 1 = 0
-	25%  : 4,500 *  (25/100) - 1 = 1,124
-	50%  : 4,500 *  (50/100) - 1 = 2,249
-	75%  : 4,500 *  (75/100) - 1 = 3,374
-	100% : 4,500 * (100/100) - 1 = 4,999
-*/
-static void MotorSpeed(uint32_t speed)
-{
-	TIM_OCInitTypeDef TIM_OCStruct;
-	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
-	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
-
-	TIM_OCStruct.TIM_Pulse = speed;
-	TIM_OC1Init(TIM3, &TIM_OCStruct);
-	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 }
 
 /*
@@ -441,8 +444,29 @@ static void MotorSpeed(uint32_t speed)
 	25%  : 450,000 *  (25/100) - 1 = 124,999
 	50%  : 450,000 *  (50/100) - 1 = 249,999
 	75%  : 450,000 *  (75/100) - 1 = 374,999
-	100% : 450,000 * (100/100) - 1 = 499,999
+	100% : 450,000 * (100/100) - 1 = 449,999
 */
+static void RGB_OFF()
+{
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+	/* red use PWM channel 1 */
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC1Init(TIM4, &TIM_OCStruct);
+	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	/* make other color's PWM to 0 */
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC2Init(TIM4, &TIM_OCStruct);
+	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+	TIM_OCStruct.TIM_Pulse = 0;
+	TIM_OC3Init(TIM4, &TIM_OCStruct);
+	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
+}
 static void RGB_RED()
 {
 	TIM_OCInitTypeDef TIM_OCStruct;
@@ -508,7 +532,7 @@ static void RGB_GREEN()
 	TIM_OC2Init(TIM4, &TIM_OCStruct);
 	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
 }
-
+/*
 static void ServoControl(uint32_t angle)
 {
 	TIM_OCInitTypeDef TIM_OCStruct;
@@ -516,119 +540,24 @@ static void ServoControl(uint32_t angle)
 	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
 
-	/* green use PWM channel 3 */
+	// green use PWM channel 3
 	TIM_OCStruct.TIM_Pulse = angle;
 	TIM_OC4Init(TIM4, &TIM_OCStruct);
 	TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
 }
-
+*/
 
 /*
-// wait for 18ms
-void delay18ms(void)
+static void MotorSpeed(uint32_t speed)
 {
-	TIM_Cmd(TIM2,ENABLE);
-	TIM_ITConfig(TIM2,TIM_IT_Update, ENABLE);
+	TIM_OCInitTypeDef TIM_OCStruct;
+	TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
+	TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
 
-	while(TIM_GetITStatus(TIM2, TIM_IT_Update) == RESET);
-	if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-
-	TIM_Cmd(TIM2,DISABLE);
+	TIM_OCStruct.TIM_Pulse = speed;
+	TIM_OC1Init(TIM3, &TIM_OCStruct);
+	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 }
 
-// wait for 40us
-void delay40us(void)
-{
-	TIM_Cmd(TIM3,ENABLE);
-	TIM_ITConfig(TIM3,TIM_IT_Update, ENABLE);
-
-	while(TIM_GetITStatus(TIM3, TIM_IT_Update) == RESET);
-	if(TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-
-	TIM_Cmd(TIM3,DISABLE);
-}
-
-// wait for 80us
-void delay80us(void)
-{
-	TIM_Cmd(TIM4,ENABLE);
-	TIM_ITConfig(TIM4,TIM_IT_Update, ENABLE);
-
-	while(TIM_GetITStatus(TIM4, TIM_IT_Update) == RESET);
-	if(TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
-		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
-
-	TIM_Cmd(TIM4,DISABLE);
-}
-
-void DHT11_Start(void)
-{
-	// set pin output low
-    GPIO_ResetBits(GPIOC, GPIO_Pin_8);
-    GPIO_ResetBits(GPIOC, GPIO_Pin_9);
-
-    // wait for 18ms
-    delay18ms();
-    // set pin output high
-    GPIO_SetBits(GPIOC, GPIO_Pin_8);
-    GPIO_SetBits(GPIOC, GPIO_Pin_9);
-
-    // set pin as input
-    GPIO_InitTypeDef gpio_init = {0};
-    gpio_init.GPIO_Mode		= GPIO_Mode_IN;
-    gpio_init.GPIO_OType	= GPIO_OType_PP;
-    gpio_init.GPIO_Speed	= GPIO_Speed_2MHz;
-    gpio_init.GPIO_PuPd		= GPIO_PuPd_NOPULL;
-    gpio_init.GPIO_Pin		= GPIO_Pin_8 | GPIO_Pin_9;
-    GPIO_Init(GPIOC, GPIO_Pin_8);
-    GPIO_Init(GPIOC, GPIO_Pin_8);
-}
-
-uint8_t DHT11_response(void)
-{
-	uint8_t response = 0;
-
-	delay40us();
-	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8))
-	{
-		delay80us();
-		if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)) response = 1;
-		else
-		{
-			response = -1;
-			send_string("\n\rresponse is -1 \n\r");
-		}
-	}
-	while(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)); // wait until value is 0
-
-	return response;
-}
-
-uint8_t DHT11_read(void)
-{
-	send_string("\n\rentering DHT11 Read function \n\r");
-	uint8_t i, j;
-	send_string("\n\rbefore for loop \n\r");
-	for(j = 0; j < 8; j++)
-	{
-		send_string("\n\rbefore while loop \n\r");
-		while(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)); // 계속 0이여서 루프 탈출이 안됨
-		send_string("\n\rafter for loop \n\r");
-		delay40us();
-		if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8))
-		{
-			i &= ~(1<<(7-j));
-		}
-		else i |= (1<<(7-j));
-		while(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)); // wait until value go to 0
-	}
-	return i;
-}
-
-void send_intval(unsigned char data)
-{
-    while (USART_GetFlagStatus(Nucleo_COM1, USART_FLAG_TXE) == RESET);
-    USART_SendData(Nucleo_COM1, data);
-}*/
+*/
